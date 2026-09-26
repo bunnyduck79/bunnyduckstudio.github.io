@@ -24,6 +24,7 @@
       background: var(--black);
       font-family: "Patrick Hand", "Comic Sans MS", cursive;
     }
+    header, main, footer { width: min(100%, 1160px); margin-inline: auto; }
     .wrap { width: min(1160px, calc(100% - 48px)); margin: 0 auto; }
     header {
       position: sticky;
@@ -46,15 +47,27 @@
     .menu { display: flex; gap: 42px; font-weight: 700; }
     .menu a { color: inherit; text-decoration: none; }
     .hero {
+      position: relative;
       min-height: 700px;
       background: var(--blue);
       display: grid;
       place-items: center;
       padding: 80px 24px 105px;
-      clip-path: polygon(0 0,100% 0,100% 96%,94% 97%,88% 96%,80% 98%,72% 96%,64% 98%,55% 96%,46% 98%,37% 96%,29% 98%,21% 96%,13% 98%,6% 96%,0 97%);
+      overflow: visible;
     }
-    .hero-logo-frame { width: min(790px, 82vw); height: min(470px, 49vw); overflow: hidden; }
-    .hero img { width: 100%; object-fit: contain; display: block; transform: translateY(-2%); }
+    .hero::after {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      left: 0;
+      right: 0;
+      bottom: -24px;
+      height: 58px;
+      background: url("assets/brush-edge-black.svg") center bottom / 100% 100% no-repeat;
+      pointer-events: none;
+    }
+    .hero-logo-frame { width: min(720px, 78vw); overflow: visible; }
+    .hero img { width: 100%; height: auto; object-fit: contain; display: block; transform: none; }
     section { position: relative; }
     .intro {
       min-height: 680px;
@@ -71,7 +84,7 @@
     .exact-image { display: block; object-fit: contain; }
     .rabbit { width: min(273px, 100%); justify-self: end; }
     .divider { height: 7px; opacity: .9; background: linear-gradient(176deg, transparent 0 31%, var(--blue) 33% 50%, transparent 52% 63%, var(--blue) 65% 78%, transparent 80%); }
-    .game { padding: 95px 0 115px; }
+    .game { padding: 95px 0 40px; }
     .game h2 { color: var(--orange); font-size: clamp(48px, 6vw, 74px); }
     .game .copy { margin-top: 24px; }
     .coming {
@@ -80,12 +93,28 @@
       clip-path: polygon(2% 8%,98% 0,96% 86%,5% 100%);
     }
     .game-icon { width: min(329px, 100%); justify-self: end; border-radius: 18%; overflow: hidden; }
+    .screenshot-reserve {
+      min-height: 280px;
+      background: var(--black);
+    }
     .feature-list { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 24px; margin: 27px 0 0; padding: 0; list-style: none; font-size: 18px; }
     .feature-list li::before { content: "•"; color: var(--yellow); margin-right: 8px; }
     .blue-bottom {
+      position: relative;
       background: var(--blue);
       padding: 95px 0 105px;
-      clip-path: polygon(0 4%,7% 3%,16% 4%,26% 2%,36% 4%,46% 2%,57% 4%,68% 2%,78% 4%,89% 2%,100% 4%,100% 100%,0 100%);
+      margin-top: 28px;
+    }
+    .blue-bottom::before {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      left: 0;
+      right: 0;
+      top: -45px;
+      height: 58px;
+      background: url("assets/brush-edge-blue.svg") center top / 100% 100% no-repeat;
+      pointer-events: none;
     }
     .bottom-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 80px; align-items: center; }
     .mail-icon { width: 190px; transform: rotate(-7deg); }
@@ -97,7 +126,7 @@
     .about-details h3 { margin: 0; color: var(--yellow); font-family: "Knewave", cursive; font-size: 24px; font-weight: 400; }
     .about-details p { margin: 8px 0 0; font-size: 17px; }
     .contact-copy { margin: 12px 0 0; font-size: 18px; }
-    .email { display: inline-block; margin-top: 25px; background: var(--cream); color: #151515; padding: 13px 24px; font-weight: 800; font-size: 20px; text-decoration: none; clip-path: polygon(1% 7%,99% 0,97% 92%,2% 100%); }
+    .email { display: inline-block; margin-top: 20px; color: #151515; padding: 18px 31px 20px; font-weight: 800; font-size: 20px; text-decoration: none; background: url("assets/brush-label.svg") center / 100% 100% no-repeat; }
     footer { background: var(--cream); color: #222; padding: 30px 0; font-size: 14px; }
     .footer-content { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
     .footer-links { display: flex; gap: 18px; }
@@ -107,8 +136,10 @@
       .menu { gap: 16px; font-size: 13px; }
       .brand { font-size: 15px; }
       .hero { min-height: 520px; }
+      .hero-logo-frame { width: min(700px, 88vw); }
       .split, .bottom-grid { grid-template-columns: 1fr; }
       .rabbit, .game-icon { justify-self: center; }
+      .screenshot-reserve { min-height: 210px; }
       .copy { font-size: 19px; }
       .intro, .game { padding: 72px 0; }
       .bottom-grid { gap: 30px; }
@@ -162,6 +193,8 @@
         </div>
         <img class="exact-image game-icon" src="assets/game-icon.png" alt="Street Free Throw game icon">
       </div>
+      <!-- Reserved black area for future game screenshots. -->
+      <div class="screenshot-reserve" aria-hidden="true"></div>
     </section>
 
     <section class="blue-bottom" id="contact">
